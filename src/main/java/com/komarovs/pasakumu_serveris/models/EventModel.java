@@ -32,7 +32,7 @@ public class EventModel {
     private Integer maxParticipants; // 20
 
     @ManyToOne // Daudzi pasākumi → viens izveidotājs
-    @JoinColumn(name = "creator_id") // FK kolonna DB
+    @JoinColumn(name = "creator_id") // Ārējas atslēgas kolonna DB
     @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "password" })
     private UserModel creator;
     // ↑ Kurš lietotājs izveidoja šo pasākumu

@@ -15,12 +15,13 @@ public class RegistrationModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false) // Ārējas atslēgas kolonna DB
     @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "password" })
     private UserModel user; // Kurš pieteicās
 
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false)
+    @JoinColumn(name = "event_id", nullable = false) // Ārējas atslēgas kolonna DB
+
     @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "creator" })
     private EventModel event; // Uz kuru pasākumu
 
