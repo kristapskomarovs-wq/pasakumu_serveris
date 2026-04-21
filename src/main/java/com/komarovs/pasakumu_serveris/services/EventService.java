@@ -88,18 +88,35 @@ public class EventService {
         registrationRepository.delete(reg);
     }
 
-    //  MANI PASĀKUMI (kur esmu pieteicies)
+    // MANI PASĀKUMI (kur esmu pieteicies)
     public List<RegistrationModel> getMyRegistrations(Long userId) {
         return registrationRepository.findAllByUserId(userId);
     }
 
-    // CIK DALĪBNIEKU PASĀKUMĀ 
+    // CIK DALĪBNIEKU PASĀKUMĀ
     public long getParticipantCount(Long eventId) {
         return registrationRepository.countByEventId(eventId);
     }
 
-    // VAI LIETOTĀJS IR PIETEICIES 
+    // VAI LIETOTĀJS IR PIETEICIES
     public boolean isUserJoined(Long eventId, Long userId) {
         return registrationRepository.existsByUserIdAndEventId(userId, eventId);
+    }
+
+    // DZĒST PASĀKUMU (tikai izveidotājs)
+    public void deleteEvent(Long eventId, Long creatorId) {
+        EventModel event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new IllegalStateException("Pasākums nav atrasts!"));
+
+        // Pārbauda vai tiešām šis lietotājs ir izveidotājs
+        if (!event.getCreator().getId().equals(creatorId)) {
+            throw new IllegalStateException("Tu neesi šī pasākuma izveidotājs!");
+        }
+
+        // Vispirms dzēš visas reģistrācijas (FK ierobežojums!)
+        registrationRepository.deleteAll(
+                registrationRepository.findAllByEventId(eventId));
+
+        eventRepository.delete(event);
     }
 }

@@ -77,4 +77,16 @@ public class EventController {
             @RequestParam Long userId) {
         return ResponseEntity.ok(eventService.isUserJoined(eventId, userId));
     }
+
+    // DELETE /api/v1/events/{eventId}?creatorId=1 — Dzēst pasākumu
+    @DeleteMapping("/api/v1/events/{eventId}")
+    public ResponseEntity<?> deleteEvent(@PathVariable Long eventId,
+            @RequestParam Long creatorId) {
+        try {
+            eventService.deleteEvent(eventId, creatorId);
+            return ResponseEntity.ok("Pasākums dzēsts!");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

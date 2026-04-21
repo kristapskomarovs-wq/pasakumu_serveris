@@ -22,7 +22,6 @@ public class RegistrationModel {
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false) // Ārējas atslēgas kolonna DB
 
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "creator" })
     private EventModel event; // Uz kuru pasākumu
 
     private LocalDateTime registeredAt; // Kad pieteicās
