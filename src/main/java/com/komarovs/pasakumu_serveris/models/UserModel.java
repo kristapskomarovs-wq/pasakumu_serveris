@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity // Šī klase = DB tabula
-@Data // Lombok: automātiski getters/setters/toString
+@Data // Lombok: automātiski getters/setters
 @Table(name = "users") // Tabulas nosaukums PostgreSQL
 public class UserModel {
 

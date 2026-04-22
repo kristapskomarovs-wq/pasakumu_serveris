@@ -17,13 +17,14 @@ public class EventController {
 
     private final EventService eventService;
 
-    // ── GET /api/v1/events — Visi pasākumi ──
+    // GET /api/v1/events — Visi pasākumi ──
     @GetMapping("/api/v1/events")
     public ResponseEntity<List<EventModel>> getAllEvents() {
         return ResponseEntity.ok(eventService.getAllEvents());
     }
 
-    // ── POST /api/v1/events?creatorId=1 — Izveidot pasākumu ──
+    // POST /api/v1/events?creatorId=1 — Izveidot pasākumu - saglabājam creatorId,
+    // lai zinātu, kurš lietotājs izveido pasākumu
     @PostMapping("/api/v1/events")
     public ResponseEntity<?> createEvent(@RequestBody EventModel event,
             @RequestParam Long creatorId) {
@@ -35,7 +36,8 @@ public class EventController {
         }
     }
 
-    // ── POST /api/v1/events/{id}/join?userId=1 — Pieteikties ──
+    // POST /api/v1/events/{id}/join?userId=1 — Pieteikties - saglabājam userId, lai
+    // zinātu, kurš lietotājs pieteicies
     @PostMapping("/api/v1/events/{eventId}/join")
     public ResponseEntity<?> joinEvent(@PathVariable Long eventId,
             @RequestParam Long userId) {
@@ -47,7 +49,8 @@ public class EventController {
         }
     }
 
-    // ── DELETE /api/v1/events/{id}/leave?userId=1 — Atcelt dalību ──
+    // DELETE /api/v1/events/{id}/leave?userId=1 — Atcelt dalību - izmantojam
+    // userId, lai zinātu, kurš lietotājs atceļ dalību
     @DeleteMapping("/api/v1/events/{eventId}/leave")
     public ResponseEntity<?> leaveEvent(@PathVariable Long eventId,
             @RequestParam Long userId) {
@@ -59,26 +62,28 @@ public class EventController {
         }
     }
 
-    // ── GET /api/v1/events/my?userId=1 — Mani pasākumi ──
+    // GET /api/v1/events/my?userId=1 — Mani pasākumi ──
     @GetMapping("/api/v1/events/my")
     public ResponseEntity<List<RegistrationModel>> getMyEvents(@RequestParam Long userId) {
         return ResponseEntity.ok(eventService.getMyRegistrations(userId));
     }
 
-    // ── GET /api/v1/events/{id}/count — Cik dalībnieku ──
+    // GET /api/v1/events/{id}/count — Cik dalībnieku ──
     @GetMapping("/api/v1/events/{eventId}/count")
     public ResponseEntity<Long> getParticipantCount(@PathVariable Long eventId) {
         return ResponseEntity.ok(eventService.getParticipantCount(eventId));
     }
 
-    // ── GET /api/v1/events/{id}/joined?userId=1 — Vai esmu pieteicies? ──
+    // GET /api/v1/events/{id}/joined?userId=1 — Vai esmu pieteicies? eventos
+    // meklējam userId, lai vai konkrētais lietotājs ir pieteicies uz šo pasākumu
     @GetMapping("/api/v1/events/{eventId}/joined")
     public ResponseEntity<Boolean> isJoined(@PathVariable Long eventId,
             @RequestParam Long userId) {
         return ResponseEntity.ok(eventService.isUserJoined(eventId, userId));
     }
 
-    // DELETE /api/v1/events/{eventId}?creatorId=1 — Dzēst pasākumu
+    // DELETE /api/v1/events/{eventId}?creatorId=1 — Dzēst pasākumu - ja creatorId
+    // sakrīt ar pasākuma izveidotāja ID, tad var dzēst pasākumu
     @DeleteMapping("/api/v1/events/{eventId}")
     public ResponseEntity<?> deleteEvent(@PathVariable Long eventId,
             @RequestParam Long creatorId) {

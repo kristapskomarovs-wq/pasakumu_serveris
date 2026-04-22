@@ -15,25 +15,25 @@ public class EventModel {
     private Long id;
 
     @Column(nullable = false)
-    private String title; // "Angular meetup"
+    private String title;
 
-    private String description; // "Mācāmies Angular 19..."
-
-    @Column(nullable = false)
-    private LocalDate eventDate; // 2026-05-15
+    private String description;
 
     @Column(nullable = false)
-    private LocalTime eventTime; // 18:00
+    private LocalDate eventDate;
 
     @Column(nullable = false)
-    private String location; // "Rīga, Brīvības 100"
+    private LocalTime eventTime;
 
     @Column(nullable = false)
-    private Integer maxParticipants; // 20
+    private String location; //
 
-    @ManyToOne // Daudzi pasākumi → viens izveidotājs
+    @Column(nullable = false)
+    private Integer maxParticipants;
+
+    @ManyToOne // vairākiem pasākumiem var būt viens un tas pats izveidotājs
     @JoinColumn(name = "creator_id") // Ārējas atslēgas kolonna DB
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "password" })
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "password" }) // Neiekļauj paroli JSON atbildē
     private UserModel creator;
-    // ↑ Kurš lietotājs izveidoja šo pasākumu
+    // Kurš lietotājs izveidoja šo pasākumu
 }

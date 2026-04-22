@@ -11,7 +11,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    // ── REĢISTRĀCIJA ──
     public Long createUser(UserModel user) {
         user.setEmail(user.getEmail().toLowerCase().trim());
 
@@ -25,12 +24,11 @@ public class UserService {
         return savedUser.getId();
     }
 
-    // ── VAI EMAIL EKSISTĒ? ──
+    // Pārbaudīt vai e-pasts jau eksistē
     public Boolean checkEmail(String email) {
         return userRepository.existsByEmail(email.toLowerCase().trim());
     }
 
-    // ── IELOGOŠANĀS ──
     public Long signIn(UserModel user) {
         UserModel foundUser = userRepository.findByEmail(user.getEmail().toLowerCase().trim());
         if (foundUser == null) {

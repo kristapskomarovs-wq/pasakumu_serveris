@@ -14,14 +14,13 @@ public class RegistrationModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne // daudziem eventiem var būt pieteicies viens un tas pats lietotājs
     @JoinColumn(name = "user_id", nullable = false) // Ārējas atslēgas kolonna DB
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "password" })
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "password" }) // Neiekļauj paroli JSON atbildē
     private UserModel user; // Kurš pieteicās
 
-    @ManyToOne
+    @ManyToOne // daudzi lietotāji var būt pieteikušies uz vienu un to pašu pasākumu
     @JoinColumn(name = "event_id", nullable = false) // Ārējas atslēgas kolonna DB
-
     private EventModel event; // Uz kuru pasākumu
 
     private LocalDateTime registeredAt; // Kad pieteicās

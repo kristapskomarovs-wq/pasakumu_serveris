@@ -21,24 +21,24 @@ public class EventService {
     private final RegistrationRepository registrationRepository;
     private final UserRepository userRepository;
 
-    // ── VISI PASĀKUMI ──
+    // visi pasākumi, sakārtoti pēc datuma
     public List<EventModel> getAllEvents() {
         return eventRepository.findAllByOrderByEventDateAsc();
     }
 
-    // ── IZVEIDOT JAUNU PASĀKUMU ──
+    // izveidot jaunu pasākumu
     public EventModel createEvent(EventModel event, Long creatorId) {
-        // ❌ VALIDĀCIJA: Datums nedrīkst būt pagātnē
+        // datums nedrīkst būt pagātnē
         if (event.getEventDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Pasākuma datums nevar būt pagātnē!");
         }
 
-        // ❌ VALIDĀCIJA: Nosaukums nevar būt tukšs
+        // nosaukums nevar būt tukšs
         if (event.getTitle() == null || event.getTitle().isBlank()) {
             throw new IllegalArgumentException("Nosaukums ir obligāts!");
         }
 
-        // ❌ VALIDĀCIJA: Dalībnieku skaits > 0
+        // dalībnieku skaits > 0
         if (event.getMaxParticipants() == null || event.getMaxParticipants() < 1) {
             throw new IllegalArgumentException("Dalībnieku skaitam jābūt vismaz 1!");
         }
@@ -51,7 +51,7 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    // ── PIETEIKTIES UZ PASĀKUMU ──
+    // pieteikšanās
     public void joinEvent(Long eventId, Long userId) {
         EventModel event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Pasākums nav atrasts!"));
@@ -77,10 +77,10 @@ public class EventService {
         reg.setUser(userRepository.findById(userId).orElseThrow());
         reg.setEvent(event);
         reg.setRegisteredAt(LocalDateTime.now());
-        registrationRepository.save(reg);
+        registrationRepository.save(reg); // saglabā DB user_id, event_id, registered_at
     }
 
-    // ── ATCELT DALĪBU ──
+    // pamest pasākumu
     public void leaveEvent(Long eventId, Long userId) {
         RegistrationModel reg = registrationRepository
                 .findByUserIdAndEventId(userId, eventId)
@@ -113,7 +113,8 @@ public class EventService {
             throw new IllegalStateException("Tu neesi šī pasākuma izveidotājs!");
         }
 
-        // Vispirms dzēš visas reģistrācijas (FK ierobežojums!)
+        // Vispirms dzēš visas reģistrācijas uz šo pasākumu, lai nerastos "svešas"
+        // reģistrācijas bez pasākuma
         registrationRepository.deleteAll(
                 registrationRepository.findAllByEventId(eventId));
 

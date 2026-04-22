@@ -24,7 +24,7 @@ public class UserController {
         }
     }
 
-    // GET /api/v1/checkemail/{email}
+    // GET /api/v1/checkemail/{email} — Pārbaudīt vai e-pasts jau eksistē
     @GetMapping("/api/v1/checkemail/{email}")
     public ResponseEntity<Boolean> checkEmail(@PathVariable String email) {
         return ResponseEntity.ok(userService.checkEmail(email));
