@@ -58,3 +58,24 @@ GET /api/v1/events/my?userId={userId}
 GET /api/v1/events/{eventId}/count
 GET /api/v1/events/{eventId}/joined?userId={userId}
 DELETE /api/v1/events/{eventId}?creatorId={creatorId}
+
+## Backend
+
+This backend connects to the frontend:
+
+[https://github.com/kristapskomarovs-wq/pasakumu_serveris](https://github.com/kristapskomarovs-wq/pasakumi_frontend)
+
+## Live Demo
+
+https://komarovs.lv/
+
+## Deployment
+
+This project is deployed live together with the Angular frontend.
+
+Deployment includes:
+- Angular frontend build
+- Spring Boot backend
+- PostgreSQL database
+- Nginx reverse proxy
+- Custom domain setup
