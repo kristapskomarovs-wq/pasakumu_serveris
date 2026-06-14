@@ -59,7 +59,7 @@ GET /api/v1/events/{eventId}/joined?userId={userId}
 DELETE /api/v1/events/{eventId}?creatorId={creatorId}
 ```
 
-## Backend
+## Frontend
 
 This backend connects to the frontend:
 
