@@ -1,4 +1,3 @@
-
 # Event Registration Platform — Backend
 
 Spring Boot backend for an event registration platform.
@@ -28,7 +27,7 @@ Spring Boot backend for an event registration platform.
 - Maven
 - REST API
 
-## Database model
+## Database Model
 
 Main entities:
 
@@ -43,7 +42,7 @@ Relationships:
 - One event can have many registrations
 - `RegistrationModel` connects users and events
 
-## API examples
+## API Examples
 
 ```http
 POST /api/v1/register
@@ -58,12 +57,13 @@ GET /api/v1/events/my?userId={userId}
 GET /api/v1/events/{eventId}/count
 GET /api/v1/events/{eventId}/joined?userId={userId}
 DELETE /api/v1/events/{eventId}?creatorId={creatorId}
+```
 
 ## Backend
 
 This backend connects to the frontend:
 
-[https://github.com/kristapskomarovs-wq/pasakumu_serveris](https://github.com/kristapskomarovs-wq/pasakumi_frontend)
+[pasakumi_frontend](https://github.com/kristapskomarovs-wq/pasakumi_frontend)
 
 ## Live Demo
 
@@ -74,6 +74,7 @@ https://komarovs.lv/
 This project is deployed live together with the Angular frontend.
 
 Deployment includes:
+
 - Angular frontend build
 - Spring Boot backend
 - PostgreSQL database
